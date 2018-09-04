@@ -1,0 +1,13 @@
+---
+- name: Copy the EPEL repository definition
+  copy: src=../files/epel.repo dest=/etc/yum.repos.d/
+
+- name: Copy the Mariadb repository definition
+  copy: src=../files/mariadb.repo dest=/etc/yum.repos.d/
+
+- name: Copy PHP repository definition
+  copy: src=../files/webtatic.repo dest=/etc/yum.repos.d/
+
+- name: Copy the newrelic repository definition
+  copy: src=../files/newrelic.repo dest=/etc/yum.repos.d/
+  

@@ -1,0 +1,28 @@
+---
+- name: Install apache
+  yum: name=httpd state=present
+
+- name: Copy Apache Default configuration file
+  template: src=httpd.conf dest=/etc/httpd/conf/httpd.conf
+ 
+- name: Add  <IfModule prefork.c> section
+  template: src=mod.conf dest=/etc/httpd/conf.modules.d/mod.conf
+
+- name: Copy Virtual Host Configuration File for Opencart
+  template: src=vhost.conf dest=/etc/httpd/conf.d/vhost.conf
+
+- name: Add System group
+  group: name={{ sys_grp }}
+
+- name: Add System user
+  user: name={{sys_user }} group={{ sys_grp }}
+
+- name: Change System User Dir Mode
+  command: chmod 755 /home/{{ sys_user }}
+
+- name: Create pub_html Directory
+  file: path=/home/{{ sys_user}}/pub_html/ state=directory owner={{ sys_user }} group={{ sys_grp }} mode=0775
+
+- name: Create Logs File Directory
+  file: path=/home/{{ sys_user}}/logs/ state=directory owner={{ sys_user }} group={{ sys_grp }} mode=0775
+

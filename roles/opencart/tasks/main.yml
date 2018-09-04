@@ -1,0 +1,24 @@
+---
+- name: Download Opencart
+  get_url: url=https://github.com/opencart/opencart/archive/{{ oc_version }}.tar.gz  dest=/home/{{ sys_user }}/pub_html/
+
+- name: Extract archive
+  command: tar -xvzf /home/{{ sys_user }}/pub_html/opencart-{{ oc_version }}.tar.gz -C /home/{{ sys_user }}/pub_html/
+
+- name: Rename OpenCart Directory 
+  command: mv /home/{{ sys_user }}/pub_html/opencart-{{ oc_version }} /home/{{ sys_user }}/pub_html/opencart
+
+- name: Copy opencart installation configuration file
+  template: src=config.php dest={{ root_dir }}
+
+- name: Copy opencart Admin configuration file
+  template: src=config.php dest={{ root_dir }}/admin
+
+- name: Give Owner to the web root directory
+  command: chown -R apache:apache /home/{{ sys_user }}/pub_html/
+
+- name: Give permissions to the web root directory
+  command: chmod -R 775 /home/{{ sys_user }}/pub_html/
+
+- name: start apache service
+  service: name=httpd state=started enabled=yes

@@ -1,0 +1,12 @@
+---
+- name: Install Apache, PHP, Mariadb, Opencart, New Relic and Secure the system
+  hosts: webserver
+  remote_user: root
+  roles:
+    - common
+    - apache
+    - php
+    - mariadb
+    - opencart
+    - secure_db
+    - newrelic
